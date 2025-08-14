@@ -18,8 +18,8 @@
 
             <!-- Right: Menu Links -->
             <div class="space-x-6">
-                <a href="#" class="text-gray-600 hover:text-gray-900 font-medium">Login</a>
-                <a href="#" class="text-gray-600 hover:text-gray-900 font-medium">Profile</a>
+                <a href="/login" class="text-gray-600 hover:text-gray-900 font-medium">Login</a>
+                <a href="/profile" class="text-gray-600 hover:text-gray-900 font-medium">Profile</a>
             </div>
         </nav>
     </header>
