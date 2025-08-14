@@ -1,3 +1,5 @@
+<!-- Start of mock up example -->
+
 <?php
 //TODO: Replace with real DB queries
 $articles = [
@@ -22,6 +24,8 @@ $totalPages = ceil($totalArticles / $perPage);
 $start = ($page - 1) * $perPage;
 $articlesForPage = array_slice($articles, $start, $perPage);
 ?>
+<!-- End of mock up example -->
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +48,7 @@ $articlesForPage = array_slice($articles, $start, $perPage);
             <!-- Right: Menu Links -->
             <div class="space-x-6">
                 <a href="#" class="text-gray-600 hover:text-gray-900 font-medium">News</a>
-                <a href="#" class="text-gray-600 hover:text-gray-900 font-medium">Login</a>
+                <a href="/login" class="text-gray-600 hover:text-gray-900 font-medium">Login</a>
             </div>
         </nav>
     </header>
@@ -60,8 +64,11 @@ $articlesForPage = array_slice($articles, $start, $perPage);
         </form>
         <ul class="space-y-4">
             <?php foreach ($articlesForPage as $article): ?>
-                <li class="p-4 bg-white rounded shadow hover:shadow-lg transition">
-                    <strong><?= htmlspecialchars($article['title']) ?></strong><br />
+                <li class="p-4 bg-white rounded shadow hover:bg-gray-100 cursor-pointer transition">
+                    <a href="/articles" style="text-decoration: none; color: inherit;">
+                        <strong><?= htmlspecialchars($article['title']) ?></strong>
+                    </a>
+                    <br>
                     <small>Published on <?= date('F j, Y', strtotime($article['published_at'])) ?></small>
                 </li>
             <?php endforeach; ?>
@@ -82,4 +89,5 @@ $articlesForPage = array_slice($articles, $start, $perPage);
         </div>
     </main>
 </body>
+
 </html>
