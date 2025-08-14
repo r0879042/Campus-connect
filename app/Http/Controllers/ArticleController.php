@@ -45,7 +45,10 @@ class ArticleController extends Controller
     public function show($id)
     {
         $article = Article::findOrFail($id);
-        return view('articles.article', compact('article'));
+        $previousArticle = Article::where('id', '<', $id)->orderBy('id', 'desc')->first();
+        $nextArticle = Article::where('id', '>', $id)->orderBy('id')->first();
+    
+        return view('articles.show', compact('article', 'previousArticle', 'nextArticle'));
     }
 
     // Show edit form
@@ -82,6 +85,26 @@ class ArticleController extends Controller
         $article = Article::findOrFail($id);
         $article->delete();
 
-        return redirect()->route('articles.index')->with('success', 'Article deleted successfully!');
+        return redirect()->route('articles.overview')->with('success', 'Article deleted successfully.');
+
+    }
+
+    public function overview() {
+        // Get all articles, including published and unpublished
+        $articles = Article::all();
+        return view('articles.overview');
+    }
+
+    public function togglePublish($id)
+    {
+        $article = Article::findOrFail($id);
+        $article->published = !$article->published;
+
+        if ($article->published && !$article->published_at) {
+            $article->published_at = now();
+        }
+        $article->save();
+
+        return redirect()->route('articles.index')->with('success', 'Article status updated.');
     }
 }

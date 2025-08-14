@@ -10,6 +10,11 @@ Route::get('/', [ArticleController::class, 'index'])->name('articles.index');
 // CRUD routes for articles
 Route::resource('articles', ArticleController::class);
 
+Route::get('/articles/overview', [ArticleController::class, 'overview'])->name('articles.overview');
+Route::delete('/articles/{id}', [ArticleController::class, 'destroy'])->name('articles.destroy');
+Route::patch('/articles/{id}/toggle', [ArticleController::class, 'togglePublish'])->name('articles.toggle');
+
+
 // Authentication routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);

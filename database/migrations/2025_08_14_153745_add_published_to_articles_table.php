@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('articles', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->text('content');
-            $table->string('image')->nullable();
-            $table->timestamps();
+        Schema::table('articles', function (Blueprint $table) {
+
+            $table->timestamp('published_at')->useCurrent();
+            $table->boolean('published')->default(false)->after('content');
         });
     }
 
@@ -25,6 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('articles');
+        Schema::table('articles', function (Blueprint $table) {
+            $table->timestamp('published_at')->useCurrent();
+        });
     }
 };

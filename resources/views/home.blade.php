@@ -18,6 +18,8 @@
             <div class="space-x-6">
                 <a href="#" class="text-gray-600 hover:text-gray-900 font-medium">News</a>
                 <a href="/login" class="text-gray-600 hover:text-gray-900 font-medium">Login</a>
+                <a href="/articles/overview" class="text-gray-600 hover:text-gray-900 font-medium">Articles overview</a>
+                <a href="/articles/create" class="text-gray-600 hover:text-gray-900 font-medium"> Create an article </a>
             </div>
         </nav>
     </header>
@@ -43,6 +45,17 @@
                     </a>
                     <br>
                     <small>Published on {{ \Carbon\Carbon::parse($article->published_at)->format('F j, Y') }}</small>
+                    <div class="space-x-2">
+                        <!-- Edit link -->
+                        <a href="{{ route('articles.edit', $article->id) }}" class="text-blue-600 hover:underline" onsubmit="return confirmDelete()">Edit</a>
+
+                        <!-- Delete form (optional) -->
+                        <form action="{{ route('articles.destroy', $article->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-600 hover:underline">Delete</button>
+                        </form>
+                    </div>
                 </li>
             @endforeach
         </ul>
@@ -52,5 +65,11 @@
             {{ $articles->links() }}
         </div>
     </main>
+
+    <script>
+        function confirmDelete() {
+            return confirm('Are you sure you want to delete this article?');
+        }
+    </script>
 </body>
 </html>
