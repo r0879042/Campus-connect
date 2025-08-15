@@ -1,8 +1,3 @@
-<?php
-// Show error message if exists
-$error = session('error');
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,8 +10,8 @@ $error = session('error');
     <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
 
-        <?php if($error): ?>
-            <p class="text-red-600 mb-4"><?= htmlspecialchars($error) ?></p>
+        <?php if($errors->any()): ?>
+            <p class="text-red-600 mb-4"><?= $errors->first() ?></p>
         <?php endif; ?>
 
         <form method="POST" action="<?= route('login') ?>">

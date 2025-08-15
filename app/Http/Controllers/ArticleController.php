@@ -11,7 +11,7 @@ class ArticleController extends Controller
     public function index()
     {
         // Fetch articles from DB with pagination (5 per page)
-        $articles = Article::orderBy('published_at', 'desc')->paginate(5);
+        $articles = Article::orderBy('published_at', 'asc')->paginate(5);
 
         return view('home', compact('articles'));
     }
