@@ -1,18 +1,28 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
 
 // Home page
 Route::get('/', [ArticleController::class, 'index'])->name('articles.index');
 
-// CRUD routes for articles
-Route::resource('articles', ArticleController::class);
+Route::middleware(['auth'])->group(function () {
+    
+    // Articles CRUD
+    Route::resource('articles', ArticleController::class);
 
-Route::get('/articles/overview', [ArticleController::class, 'overview'])->name('articles.overview');
-Route::delete('/articles/{id}', [ArticleController::class, 'destroy'])->name('articles.destroy');
-Route::patch('/articles/{id}/toggle', [ArticleController::class, 'togglePublish'])->name('articles.toggle');
+    // Overview page
+    Route::get('/articles/overview', [ArticleController::class, 'overview'])
+        ->name('articles.overview');
+
+    // Toggle publish
+    Route::patch('/articles/{id}/toggle', [ArticleController::class, 'togglePublish'])
+        ->name('articles.toggle');
+    
+});
+
 
 
 // Authentication routes
@@ -23,7 +33,11 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('regi
 Route::post('/register', [AuthController::class, 'register']);
 
 // Profile page
-Route::get('/profile', function () {
-    return view('profile');
-})->name('profile');
-    //})->middleware('auth')->name('profile');
+Route::get('/profile', [AuthController::class, 'showProfile'])->middleware('auth')->name('profile');
+
+// Log out route
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
+    
