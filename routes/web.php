@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 // Home page
 Route::get('/', [ArticleController::class, 'index'])->name('articles.index');
@@ -20,6 +22,14 @@ Route::middleware(['auth'])->group(function () {
     // Toggle publish
     Route::patch('/articles/{id}/toggle', [ArticleController::class, 'togglePublish'])
         ->name('articles.toggle');
+
+    //Users page
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('/admins', [AdminController::class, 'index']);
+    Route::post('/admins/delete', [AdminController::class, 'destroy']);
+
     
 });
 
