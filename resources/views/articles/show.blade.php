@@ -1,3 +1,7 @@
+<?php
+use Illuminate\Support\Facades\Auth;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,10 +22,12 @@
             </div>
 
             <!-- Right: Menu Links -->
-            <div class="space-x-6">
-                <a href="/login" class="text-gray-600 hover:text-gray-900 font-medium">Login</a>
-                <a href="/profile" class="text-gray-600 hover:text-gray-900 font-medium">Profile</a>
-            </div>
+            <?php if(Auth::check()): ?>
+                <a href="/profile" class="text-gray-600 hover:text-gray-900 font-medium">My Profile</a>
+            <?php else: ?>
+                <a href="<?= route('login') ?>" class="text-gray-600 hover:text-gray-900 font-medium">Login</a>
+            <?php endif; ?>
+            
         </nav>
     </header>
 

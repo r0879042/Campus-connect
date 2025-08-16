@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -89,10 +90,31 @@ class ArticleController extends Controller
 
     }
 
-    public function overview() {
-        // Get all articles, including published and unpublished
+    // Show the articles overview page
+    public function overview()
+    {
+        // Get all articles (admin can see all, user may filter later)
         $articles = Article::all();
-        return view('articles.overview');
+
+        return view('overview', compact('articles'));
+    }
+
+    // Delete an article
+    public function delete(Request $request)
+    {
+        $user = Auth::user();
+        if (!$user || $user->role !== 'admin') {
+            abort(403, 'Unauthorized');
+        }
+
+        $request->validate([
+            'id' => 'required|exists:articles,id',
+        ]);
+
+        $article = Article::find($request->id);
+        $article->delete();
+
+        return redirect()->back()->with('success', 'Article deleted successfully.');
     }
 
     public function togglePublish($id)

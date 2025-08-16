@@ -26,8 +26,7 @@ use Illuminate\Support\Facades\Auth;
                     <a href="/profile" class="text-gray-600 hover:text-gray-900 font-medium">My Profile</a>
 
                     <?php if(Auth::user()->role === 'admin'): ?>
-                        <a href="/articles/overview" class="text-gray-600 hover:text-gray-900 font-medium">Articles Overview</a>
-                        <a href="/articles/create" class="text-gray-600 hover:text-gray-900 font-medium">Create an Article</a>
+                        <a href="/overview" class="text-gray-600 hover:text-gray-900 font-medium">Articles Overview</a>
                     <?php endif; ?>
                 <?php else: ?>
                     <a href="<?= route('login') ?>" class="text-gray-600 hover:text-gray-900 font-medium">Login</a>
@@ -52,7 +51,8 @@ use Illuminate\Support\Facades\Auth;
 
         <!-- Article list -->
         <ul class="space-y-4">
-            <?php foreach ($articles as $article): ?>
+        <?php foreach ($articles as $article): ?>
+            <?php if ($article->published): // Only show published articles ?>
                 <li class="p-4 bg-white rounded shadow hover:bg-gray-100 cursor-pointer transition">
                     <a href="/articles/<?= $article->id ?>" class="no-underline text-gray-900">
                         <strong><?= htmlspecialchars($article->title) ?></strong>
@@ -73,8 +73,10 @@ use Illuminate\Support\Facades\Auth;
                         <?php endif; ?>
                     </div>
                 </li>
-            <?php endforeach; ?>
-        </ul>
+            <?php endif; ?>
+        <?php endforeach; ?>
+</ul>
+
 
         <!-- Pagination (example placeholder, adjust with your PHP pagination) -->
         <div class="mt-8">

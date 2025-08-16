@@ -16,8 +16,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('articles', ArticleController::class);
 
     // Overview page
-    Route::get('/articles/overview', [ArticleController::class, 'overview'])
-        ->name('articles.overview');
+    Route::get('/overview', [ArticleController::class, 'overview'])->name('articles.overview');
+
 
     // Toggle publish
     Route::patch('/articles/{id}/toggle', [ArticleController::class, 'togglePublish'])
