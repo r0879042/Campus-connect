@@ -11,9 +11,13 @@
     <!-- Header -->
     <header class="bg-gray-100 shadow">
         <nav class="container mx-auto flex items-center justify-between px-6 py-4">
-            <h1 class="text-xl font-bold text-gray-800">Campus Connect</h1>
+            <div class="text-xl font-bold text-gray-800">
+                <a href="/articles" class="text-gray-900 hover:text-gray-600 font-medium">
+                    Campus Connect
+                </a>
+            </div>            
             <div class="space-x-6">
-                <a href="{{ route('articles.index') }}" class="text-gray-600 hover:text-gray-900 font-medium">News</a>
+                <a href="/articles" class="text-gray-600 hover:text-gray-900 font-medium">News</a>
                 <a href="/login" class="text-gray-600 hover:text-gray-900 font-medium">Login</a>
             </div>
         </nav>
@@ -75,7 +79,7 @@
                     @if($article->image)
                         <div class="mt-2">
                             <p class="text-sm text-gray-600">Current Image:</p>
-                            <img src="{{ asset('storage/app/public/' . $article->image) }}" alt="Article Image" class="h-16 mt-1 rounded border">
+                            <img src="{{ asset('storage/' . $article->image) }}" alt="Article Image" class="h-16 mt-1 rounded border">
                         </div>
                     @endif
                 </div>

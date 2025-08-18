@@ -9,10 +9,21 @@ use Illuminate\Support\Facades\Auth;
 class ArticleController extends Controller
 {
     // List all articles
-    public function index()
+    public function index(Request $request)
     {
-        // Fetch articles from DB with pagination (5 per page)
-        $articles = Article::orderBy('published_at', 'asc')->paginate(5);
+        $q = $request->input('q');
+
+        $articles = Article::query()
+            ->where('published', true) // move this from the view to the query
+            ->when($q, function ($query) use ($q) {
+                $query->where(function ($q2) use ($q) {
+                    $q2->where('title', 'like', "%{$q}%")
+                    ->orWhere('content', 'like', "%{$q}%");
+                });
+            })
+            ->orderByDesc('published_at')
+            ->paginate(5)          
+            ->withQueryString(); 
 
         return view('home', compact('articles'));
     }

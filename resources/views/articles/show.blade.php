@@ -18,9 +18,13 @@ use Illuminate\Support\Facades\Auth;
         <nav class="container mx-auto flex items-center justify-between px-6 py-4">
             <!-- Left: Website Title -->
             <div class="text-xl font-bold text-gray-800">
-                Campus Connect
+                <a href="/articles" class="text-gray-900 hover:text-gray-600 font-medium">
+                    Campus Connect
+                </a>
             </div>
 
+
+            <a href="/articles" class="text-gray-600 hover:text-gray-900 font-medium">News</a>
             <!-- Right: Menu Links -->
             <?php if(Auth::check()): ?>
                 <a href="/profile" class="text-gray-600 hover:text-gray-900 font-medium">My Profile</a>
@@ -44,7 +48,7 @@ use Illuminate\Support\Facades\Auth;
 
         <!-- Image -->
         @if($article->image)
-            <img src="{{ asset('storage/app/public/' . $article->image) }}"
+            <img src="{{ asset('storage/' . $article->image) }}"
                 alt="{{ $article->title }}"
                 class="w-full max-h-[500px] object-cover rounded-lg shadow mb-6">
         @endif

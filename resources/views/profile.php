@@ -16,9 +16,9 @@ $user = Auth::user();
 
     <header class="bg-gray-100 shadow">
         <nav class="container mx-auto flex items-center justify-between px-6 py-4">
-            <div class="text-xl font-bold text-gray-800">Campus Connect</div>
+            <a href="/articles" class="text-gray-900 hover:text-gray-600 font-medium">Campus Connect</a>
             <div class="space-x-6 flex items-center">
-                <a href="<?= route('articles.index') ?>" class="text-gray-600 hover:text-gray-900 font-medium">News</a>
+                <a href="/articles" class="text-gray-600 hover:text-gray-900 font-medium">News</a>
 
                 <form method="POST" action="<?= route('logout') ?>" class="inline">
                     <input type="hidden" name="_token" value="<?= csrf_token() ?>">

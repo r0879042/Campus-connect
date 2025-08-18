@@ -13,7 +13,26 @@ $currentUser = Auth::user();
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Administrators</title>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <header class="bg-gray-100 shadow">
+        <nav class="container mx-auto flex items-center justify-between px-6 py-4">
+            <div class="text-xl font-bold text-gray-800">Campus Connect</div>
+            <div class="space-x-6 flex items-center">
+                <a href="<?= route('articles.index') ?>" class="text-gray-600 hover:text-gray-900 font-medium">News</a>
+                <a href="/users" class="text-gray-600 hover:text-gray-900 font-medium">Users</a>
+
+                <form method="POST" action="<?= route('logout') ?>" class="inline">
+                    <input type="hidden" name="_token" value="<?= csrf_token() ?>">
+                    <button type="submit" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
+                        Disconnect
+                    </button>
+                </form>
+            </div>
+        </nav>
+    </header>
+
+
+
     <div class="container mx-auto px-6 py-10">
         <h1 class="text-3xl font-bold mb-6 text-gray-900">Administrators</h1>
 

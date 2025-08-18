@@ -20,20 +20,19 @@ Route::middleware(['auth'])->group(function () {
 
 
     // Toggle publish
-    Route::patch('/articles/{id}/toggle', [ArticleController::class, 'togglePublish'])
-        ->name('articles.toggle');
+    Route::patch('/articles/{id}/toggle', [ArticleController::class, 'togglePublish'])->name('articles.toggle');
+    
+});
 
+// All admin-only routes here
+Route::middleware(['auth', 'role:admin'])->group(function () {
     //Users page
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
     Route::get('/admins', [AdminController::class, 'index']);
     Route::post('/admins/delete', [AdminController::class, 'destroy']);
-
-    
 });
-
-
 
 // Authentication routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -50,4 +49,3 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/');
 })->name('logout');
-    

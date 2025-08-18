@@ -21,11 +21,15 @@ $user = $isLoggedIn ? $_SESSION['user'] : null;
     <!-- Header -->
     <header class="bg-gray-100 shadow">
         <nav class="container mx-auto flex items-center justify-between px-6 py-4">
-            <div class="text-xl font-bold text-gray-800">Campus Connect</div>
+            <div class="text-xl font-bold text-gray-800">
+                <a href="/articles" class="text-gray-900 hover:text-gray-600 font-medium">
+                    Campus Connect
+                </a>
+            </div>
             <div class="space-x-6">
                 <a href="/articles" class="text-gray-600 hover:text-gray-900 font-medium">News</a>
                 <a href="/profile" class="text-gray-600 hover:text-gray-900 font-medium">Profile</a>
-                <a href="/articles/create" class="text-gray-600 hover:text-gray-900 font-medium">Submit Article</a>
+                <a href="/articles/create" class="text-gray-600 hover:text-gray-900 font-medium">Create an article</a>
             </div>
         </nav>
     </header>
@@ -57,10 +61,17 @@ $user = $isLoggedIn ? $_SESSION['user'] : null;
                     <!-- Right: Edit/Delete -->
                     <div class="flex flex-col swhpace-y-1">
                         <a href="/articles/<?= $article->id ?>/edit/" class="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700 text-center">Edit</a>
-                        <form action="/articles/delete/<?= $article->id ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete this article?');">
-                            <input type="hidden" name="_token" value="<?= htmlspecialchars($_SESSION['_token'] ?? '') ?>">
-                            <button type="submit" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Delete</button>
+                        <form action="<?= url('/articles/'.$article->id) ?>" method="POST"
+                            onsubmit="return confirm('Are you sure you want to delete this article?');">
+                            <!-- CSRF Token -->
+                            <input type="hidden" name="_token" value="<?= csrf_token() ?>">
+                            <input type="hidden" name="_method" value="DELETE">
+
+                            <button type="submit" class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">
+                                Delete
+                            </button>
                         </form>
+
                     </div>
                 </li>
             <?php endforeach; ?>
