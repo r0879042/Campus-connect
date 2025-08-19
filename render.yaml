@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: laravel-app
+    plan: free
+    env: docker
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        value: base64:7JocnT6avKAyJP2aHZLMArPSqddeYmVxMwwtbfQ/dT4=
+      
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: dpg-d2i3fgbe5dus73ebqitg-a
+      - key: DB_PORT
+        value: "5432"
+      - key: DB_DATABASE
+        value: campus_connect_db_bdid
+      - key: DB_USERNAME
+        value: campus_connect_db_bdid_user
+      - key: DB_PASSWORD
+        value: 2gMWSYYK3h68mdFTD4H8POSXsKgqudVW
+      - key: PGSSLMODE
+        value: require
