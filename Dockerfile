@@ -8,6 +8,7 @@ RUN set -eux; \
     apt-get install -y --no-install-recommends \
         git unzip ca-certificates \
         libpq-dev libzip-dev zlib1g-dev \
+        libonig-dev pkg-config \
     ; \
     update-ca-certificates; \
     docker-php-ext-configure zip; \
@@ -17,13 +18,13 @@ RUN set -eux; \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 WORKDIR /app
 
-# cache layer for composer
+# cache composer layers
 COPY composer.json composer.lock ./
 ENV COMPOSER_ALLOW_SUPERUSER=1
 ENV COMPOSER_MEMORY_LIMIT=-1
 RUN composer install --no-dev --prefer-dist --no-progress --no-interaction --optimize-autoloader --no-scripts
 
-# now copy the rest
+# now copy the rest of your app
 COPY . ./
 
 # ---------------------------
@@ -49,7 +50,9 @@ FROM php:8.3-cli
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
-        ca-certificates libpq-dev libzip-dev zlib1g-dev \
+        ca-certificates \
+        libpq-dev libzip-dev zlib1g-dev \
+        libonig-dev pkg-config \
     ; \
     update-ca-certificates; \
     docker-php-ext-configure zip; \
