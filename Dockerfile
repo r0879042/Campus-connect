@@ -17,9 +17,6 @@ RUN composer install --no-dev --prefer-dist --no-progress --no-interaction --opt
 
 
 COPY . ./
-# (Optional) 
-# RUN php artisan config:clear && php artisan route:clear && php artisan view:clear
-
 # ---------------------------
 # 2) Node build stage (Vite)
 # ---------------------------
